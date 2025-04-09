@@ -55,7 +55,7 @@ public class EmpDeptSalgradeTests
     {
         var emps = Database.GetEmps();
 
-        var result = emps.Select(emp => new {EName = emp.EName, Sal = emp.Sal}); 
+        var result = emps.Select(emp => new {emp.EName, emp.Sal}); 
         
         Assert.All(result, r =>
         {
@@ -75,7 +75,7 @@ public class EmpDeptSalgradeTests
         var result = emps.Join(depts,
             e => e.DeptNo,
             d => d.DeptNo,
-            (e, d) => new {EName = e.EName, DName = d.DName}
+            (e, d) => new {e.EName, d.DName}
             ); 
 
         Assert.Contains(result, r => r.DName == "SALES" && r.EName == "ALLEN");
@@ -104,7 +104,7 @@ public class EmpDeptSalgradeTests
 
         var result = emps
             .Where(e=> e.Comm != null)
-            .Select(e => new {Ename = e.EName, Comm = e.Comm}); 
+            .Select(e => new {e.EName, e.Comm}); 
         
         Assert.All(result, r => Assert.NotNull(r.Comm));
     }
