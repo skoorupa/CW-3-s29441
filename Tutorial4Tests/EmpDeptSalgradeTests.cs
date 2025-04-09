@@ -9,7 +9,7 @@ public class EmpDeptSalgradeTests
     {
         var emps = Database.GetEmps();
 
-        List<Emp> result = null; 
+        List<Emp> result = emps.FindAll(e => e.Job == "SALESMAN"); 
 
         Assert.Equal(2, result.Count);
         Assert.All(result, e => Assert.Equal("SALESMAN", e.Job));
@@ -22,7 +22,7 @@ public class EmpDeptSalgradeTests
     {
         var emps = Database.GetEmps();
 
-        List<Emp> result = null; 
+        List<Emp> result = emps.FindAll(e => e.DeptNo == 30).OrderByDescending(e => e.Sal).ToList(); 
 
         Assert.Equal(2, result.Count);
         Assert.True(result[0].Sal >= result[1].Sal);
@@ -36,7 +36,7 @@ public class EmpDeptSalgradeTests
         var emps = Database.GetEmps();
         var depts = Database.GetDepts();
 
-        List<Emp> result = null; 
+        List<Emp> result = emps.FindAll(e => depts.FindAll(d => d.Loc == "CHICAGO").Select(d=>d.DeptNo).Contains(e.DeptNo)); 
 
         Assert.All(result, e => Assert.Equal(30, e.DeptNo));
     }
